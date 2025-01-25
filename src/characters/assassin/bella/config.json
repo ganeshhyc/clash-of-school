@@ -1,0 +1,49 @@
+{
+    "name": "Bella",
+    "attack": {
+        "image": "./action/image.png",
+        "size": 128,
+        "count": 8,
+        "type":"throw",
+        "throw$": {
+            "speed": 4
+        },
+        "prop$": ["book"],
+        "book$": {
+            "image": "./action/weapon.png",
+            "size": 128,
+            "priority": 1,
+            "reload": 3,
+            "speed": 7,
+            "damage": 5
+        }
+    },
+    "defence": {
+        "image": "./action/defence.png",
+        "size": 128,
+        "count": 4,
+        "save": 4
+    },
+    "state": {
+        "states$": ["idle", "talk", "walk"],
+        "idle$": {
+            "image": "./state/idle.png",
+            "size": 128,
+            "count": 9,
+            "speed": 0
+        },
+        "talk$": {
+            "image": "./state/talk.png",
+            "size": 128,
+            "count": 11,
+            "speed": 0
+        },
+        "walk$": {
+            "image": "./state/walk.png",
+            "size": 128,
+            "count": 12,
+            "speed": 2
+        }
+    },
+    "health": 70
+}
