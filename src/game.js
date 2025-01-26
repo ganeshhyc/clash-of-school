@@ -23,11 +23,6 @@ window.onmessage = function(e) {
     }
 }
 
-
-const processThread = []; // get all required renders
-
-processThread.push(action('assassin', 'bella', 'walk'));
-
 const action = function(type, name, state) {
     return {
         state,
@@ -38,5 +33,9 @@ const action = function(type, name, state) {
         }
     }
 }
+
+const processThread = []; // get all required renders
+
+processThread.push(action('assassin', 'bella', 'walk'));
 
 engine.start(processThread, fps);
