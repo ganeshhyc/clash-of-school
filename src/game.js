@@ -26,12 +26,11 @@ window.onmessage = function(e) {
 
 const processThread = []; // get all required renders
 
-processThread.push(walk('assassin', 'bella'));
+processThread.push(action('assassin', 'bella', 'walk'));
 
-const walk = (type, name) => {
+const action = function(type, name, state) {
     return {
-        id: uuid(),
-        state: 'walk',
+        state,
         do: function(engineState) {
             window.postMessage({
                 character: characters[type][name].state(this.state, engineState)
