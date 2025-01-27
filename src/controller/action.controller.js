@@ -1,14 +1,8 @@
-const characters = require('../characters');
-
-module.exports = function(type, name, state, id) {
+module.exports = function(character, state, id) {
     return {
         id,
         state,
-        do: function(engineState, idleState) {
-            const Character = characters[type][name];
-            window.postMessage({
-                character: new Character(engineState, idleState).state(state)
-            });
-        }
+        do: (engineState, characterState) => window.postMessage({character: character.state(engineState, characterState)}),
+        perform: (engineState, characterState) => window.postMessage({character: perform.perform(engineState, characterState)})
     }
 }

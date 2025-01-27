@@ -6,28 +6,44 @@ const walkImg = require('./state/walk.png');
 module.exports = class Bella {
     _engineState = 0;
     _idleState = 0;
+    _lastState = null;
+    _buffer = 200;
 
-    constructor(engineState, idleState){
-        this._engineState = engineState;
-        this._idleState = idleState;
-    }
+    constructor(){}
 
     /**
      * select state
      */
-    state(s = 'idle'){
+    state(e, s = 'idle'){
         const arg = s+'$';
-        const count = this._engineState % config.state[arg].count;
+        this._engineState = e;
+        let count = this._engineState % config.state[arg].count;
         switch(s){
             case 'idle':
+                if(this._lastState !== s){
+                    this._idleState = this._engineState;
+                }
+                this._lastState = s;
                 return this.idle(count)
             case 'talk':
+                this._lastState = s;
                 return this.talk(count);
             case 'walk':
+                this._lastState = s;
                 return this.walk(count);
             default:
+                this._lastState = s;
                 return this.idle(count);
         }
+    }
+
+    /**
+     * Fight and action
+     * @param {*} e 
+     * @param {*} s 
+     */
+    perform(e, s){
+        // I will think later
     }
 
     /**
@@ -41,7 +57,7 @@ module.exports = class Bella {
             x: config.state.idle$.size * count,
             y: config.state.idle$.size,
             size: config.state.idle$.size,
-            distance_x: config.state.idle$.speed *  this._idleState
+            distance_x: config.state.idle$.speed * this._idleState + this._buffer
         }
     }
 
@@ -57,7 +73,7 @@ module.exports = class Bella {
             x: config.state.talk$.size * count,
             y: config.state.talk$.size,
             size: config.state.talk$.size,
-            distance_x: config.state.talk$.speed *  this._engineState
+            distance_x: config.state.talk$.speed * this._engineState
         }
     }
 

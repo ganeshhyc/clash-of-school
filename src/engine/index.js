@@ -1,5 +1,6 @@
 const _ = require('lodash');
 const controller = require('../controller');
+const characters = require('../characters');
 
 let engineState = 0;
 let idleState = 0;
@@ -8,14 +9,19 @@ let thread = [];
 let fps = 60;
 let _interval;
 
+const Character = characters['assassin']['bella'];
+const bellaId = Date.now();
+const character = new Character();
+let characterState = 'walk';
+
 const start = (_thread = [], _fps, _canvas) => {
-    threat = _thread;
+    thread = _thread;
+
     controller
         .process(_thread)
-        .push(controller.action('assassin', 'bella', 'walk', Date.now()));
+        .push(controller.action(character, 'walk', bellaId));
 
     fps = _fps;
-    engineState = engineState > maxAnim ? 0 : engineState;
 
     const ctx = _canvas.getContext('2d');
 
@@ -51,21 +57,14 @@ const start = (_thread = [], _fps, _canvas) => {
             };
         }
     }
+
+    // remove this later
     setTimeout(()=>{
-        idleState = engineState;
-        stop();
+        characterState = 'idle';
+    }, 3000);
+    _interval = window.setInterval(animate, 1000/fps);
+    // remove this later
 
-        controller
-        .process(Object.values(controller.process(thread).callbackRegistry))
-        .push(controller.action('assassin', 'bella', 'idle', thread[0]));
-
-        _interval = window.setInterval(animate, 1000/fps);    
-
-        controller
-        .process(Object.values(controller.process(thread).callbackRegistry))
-        .push(controller.action('assassin', 'bella', 'idle', Date.now()));
-    }, 3000)
-    _interval = window.setInterval(animate, 1000/fps);    
 };
 
 const stop = () => {
@@ -74,13 +73,14 @@ const stop = () => {
 
 const animate = () => {
     if(_.isArray(thread)){
-        processThread()
+        processThread();
         engineState++;
+        engineState = engineState > maxAnim ? 0 : engineState;
     }
 }
 
 const processThread = () => thread.forEach(
-    process => controller.process(thread).callbackRegistry[process].do(engineState, idleState)
+    process => controller.process(thread).callbackRegistry[process].do(engineState, characterState)
 );
 
 module.exports = {
