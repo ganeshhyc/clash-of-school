@@ -1,5 +1,5 @@
-const bella = require('./bella');
+const Bella = require('./bella');
 
 module.exports = {
-    bella
+    bella: Bella
 }

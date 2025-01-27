@@ -30,13 +30,13 @@
             "image": "./state/idle.png",
             "size": 128,
             "count": 9,
-            "speed": 0
+            "speed": 1
         },
         "talk$": {
             "image": "./state/talk.png",
             "size": 128,
             "count": 11,
-            "speed": 0
+            "speed": 1
         },
         "walk$": {
             "image": "./state/walk.png",
